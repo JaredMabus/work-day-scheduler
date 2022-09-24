@@ -1,5 +1,5 @@
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   line-height: 1;
 }
@@ -14,6 +14,7 @@ textarea {
 }
 
 .jumbotron {
+  position: relative;
   text-align: center;
   background-color: transparent;
   color: black;
@@ -68,4 +69,14 @@ textarea {
 .saveBtn i:hover {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
+}
+
+.notify-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 50px;
+  max-height: 50px;
 }

@@ -1,5 +1,8 @@
 // Selectors
 var currentDayEl = $("#currentDay");
+var jumbotronEl = $(".jumbotron");
+var notifyDiv = $(".notify-wrapper");
+var notifyTimer = 5;
 
 // Create time block object
 var timeBlocks = {
@@ -31,16 +34,16 @@ const timeContainer = $(".container-fluid");
 // Load elements
 var loadElements = function () {
   for (let i = 0; i < hours.length; i++) {
-    let createRow = $("<div class='row time-block'>").attr(
+    let createRow = $("<div class='row time-block flex-nowrap'>").attr(
       "id",
       militaryTimeId[i]
     );
-    let createHour = $("<div class='hour col-1'>");
-    let createTextField = $("<textarea class='col-10'>");
+    let createHour = $("<div class='hour col-sm-3 col-md-1 '>");
+    let createTextField = $("<textarea class=' col-sm-8 col-md-10 '>");
     createTextField.attr("id", militaryTimeId[i]);
 
     let createBtn = $(
-      "<button type='button' class='saveBtn col-1 far fa-save'>"
+      "<button type='button' class='saveBtn far fa-save col-sm-1 col-md-1  '>"
     );
 
     timeContainer.append(createRow);
@@ -79,13 +82,13 @@ var determineTimeFormat = function (timeBlock) {
 
   if (idHrNum === currentHour) {
     // Current block hour
-    timeBlock.css("background-color", "red");
+    timeBlock.css("background-color", "#F66960");
   } else if (idHrNum < currentHour) {
     // Before current block hour
     timeBlock.css("background-color", "lightgrey");
   } else {
     // After current block hour
-    timeBlock.css("background-color", "green");
+    timeBlock.css("background-color", "#76DC77");
   }
 };
 
@@ -109,12 +112,33 @@ var getLocalStorage = function () {
   }
 };
 
+// Notify user the event was added to local storage
+var notifyUser = function () {
+  // Return if notify already on page
+  if ($("#notify").length > 0) {
+    return;
+  }
+  var createNotify = $("<p>");
+  createNotify.attr("id", "notify");
+  createNotify.text("Appointment Added to Local Storage ✅");
+  notifyDiv.append(createNotify);
+  var timer = setInterval(function () {
+    notifyTimer--;
+    if (notifyTimer <= 0) {
+      clearInterval(timer);
+      $("#notify").remove();
+      notifyTimer = 5;
+    }
+  }, 1000);
+};
+
 // Set time blocks in local storage
 var setLocalStorage = function (saveBtn) {
   let textArea = saveBtn.parent().children("textarea");
   let textAreaId = textArea.attr("id");
   timeBlocks[textAreaId] = textArea.val();
   localStorage.setItem("timeBlocks", JSON.stringify(timeBlocks));
+  notifyUser();
 };
 
 // Run init at start
