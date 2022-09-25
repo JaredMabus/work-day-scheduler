@@ -61,9 +61,7 @@ var currentDate = moment();
 // Update datetime every second
 var updateDate = function () {
   currentDate = moment();
-  currentDayEl
-    .text(currentDate.format("dddd, MMMM Do"))
-    .css({ fontWeight: "bold", fontSize: "1.5rem" });
+  currentDayEl.text(currentDate.format("dddd, MMMM Do"));
 };
 
 // Run time interval
@@ -120,7 +118,7 @@ var notifyUser = function () {
   }
   var createNotify = $("<p>");
   createNotify.attr("id", "notify");
-  createNotify.text("Appointment Added to Local Storage ✅");
+  createNotify.text("Local Storage Updated ✅");
   notifyDiv.append(createNotify);
   var timer = setInterval(function () {
     notifyTimer--;
